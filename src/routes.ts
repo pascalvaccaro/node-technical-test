@@ -6,6 +6,7 @@ import {
   RawServerDefault,
 } from "fastify";
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
+import { mediaApi, programApi } from "./api";
 
 export type FastifyTypebox = FastifyInstance<
   RawServerDefault,
@@ -16,4 +17,6 @@ export type FastifyTypebox = FastifyInstance<
 >;
 
 export function registerRoutes(fastify: FastifyTypebox): void {
+  mediaApi(fastify);
+  programApi(fastify);
 }
