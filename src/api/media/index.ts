@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { Type } from "@sinclair/typebox";
 import { Media, MediaId, MediaType } from "./schema";
+import mediaQueryFactory from "./queries";
 import {
   PaginationQuerystring,
   PaginationQuerystringType,
@@ -8,6 +9,8 @@ import {
 } from "../pagination/schema";
 
 export default (fastify: FastifyInstance) => {
+  const queries = mediaQueryFactory(fastify);
+
   fastify.get<{ Querystring: PaginationQuerystringType }>(
     "/api/media",
     {
@@ -20,6 +23,7 @@ export default (fastify: FastifyInstance) => {
       },
     },
     async (request, reply) => {
+      const items = await queries.findMedias(request.query);
       reply.send({ ...request.query, items, length: items.length });
     }
   );
@@ -36,8 +40,7 @@ export default (fastify: FastifyInstance) => {
       },
     },
     async (request, reply) => {
-      const media = request.body;
-
+      const media = await queries.createMedia(request.body);
       reply.status(201).send(media);
     }
   );
@@ -54,10 +57,8 @@ export default (fastify: FastifyInstance) => {
       },
     },
     async (request, reply) => {
-      const { body: media, params } = request;
-      const { id } = params;
-
-      reply.status(200).send(media);
+      const media = await queries.getMediaById(request.params.id);
+      reply.send(media);
     }
   );
 
@@ -74,10 +75,8 @@ export default (fastify: FastifyInstance) => {
       },
     },
     async (request, reply) => {
-      const { body: media, params } = request;
-      const { id } = params;
-
-      reply.status(200).send(media);
+      const media = await queries.updateMedia(request.params.id, request.body);
+      reply.send(media);
     }
   );
 
@@ -93,8 +92,7 @@ export default (fastify: FastifyInstance) => {
       },
     },
     async (request, reply) => {
-      const { id } = request.params;
-
+      await queries.deleteMedia(request.params.id);
       reply.status(204).send();
     }
   );

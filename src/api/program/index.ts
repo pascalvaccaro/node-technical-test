@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { Type } from "@sinclair/typebox";
 
 import { Program, ProgramId, ProgramType } from "./schema";
+import programQueryFactory from "./queries";
 import {
   PaginationQuerystring,
   PaginationQuerystringType,
@@ -9,6 +10,8 @@ import {
 } from "../pagination/schema";
 
 export default (fastify: FastifyInstance) => {
+  const queries = programQueryFactory(fastify);
+
   fastify.get<{ Querystring: PaginationQuerystringType }>(
     "/api/program",
     {
@@ -21,6 +24,7 @@ export default (fastify: FastifyInstance) => {
       },
     },
     async (request, reply) => {
+      const items = await queries.findPrograms(request.query);
       reply.send({ ...request.query, items, length: items.length });
     }
   );
@@ -37,8 +41,7 @@ export default (fastify: FastifyInstance) => {
       },
     },
     async (request, reply) => {
-      const program = request.body;
-
+      const program = await queries.createProgram(request.body);
       reply.status(201).send(program);
     }
   );
@@ -55,10 +58,8 @@ export default (fastify: FastifyInstance) => {
       },
     },
     async (request, reply) => {
-      const { body: program, params } = request;
-      const { id } = params;
-
-      reply.status(200).send(program);
+      const program = await queries.getProgramById(request.params.id);
+      reply.send(program);
     }
   );
 
@@ -75,10 +76,8 @@ export default (fastify: FastifyInstance) => {
       },
     },
     async (request, reply) => {
-      const { body: program, params } = request;
-      const { id } = params;
-
-      reply.status(200).send(program);
+      const program = await queries.updateProgram(request.params.id, request.body);
+      reply.send(program);
     }
   );
 
@@ -94,8 +93,7 @@ export default (fastify: FastifyInstance) => {
       },
     },
     async (request, reply) => {
-      const { id } = request.params;
-
+      await queries.deleteProgram(request.params.id);
       reply.status(204).send();
     }
   );
