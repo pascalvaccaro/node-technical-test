@@ -1,0 +1,1033 @@
+{
+	"info": {
+		"_postman_id": "b69d3ca0-4e21-4946-a97d-c3f552b613a5",
+		"name": "ETX Node Technical Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25866201"
+	},
+	"item": [
+		{
+			"name": "Basic Test Suite",
+			"item": [
+				{
+					"name": "Create a media",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Media created correctly\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.collectionVariables.set(\"mediaId\", jsonData.id);\r",
+									"    pm.expect(jsonData.name).to.eq(\"Podcast #1\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Podcast #1\",\n  \"file\": \"https://audio.com/file/103843.mp3\",\n  \"duration\": 567489010,\n  \"description\": \"A third file to store\",\n  \"position\": 0,\n  \"programId\": null\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/media",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"media"
+							]
+						},
+						"description": "Create a media"
+					},
+					"response": [
+						{
+							"name": "Default Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"<string>\",\n  \"file\": \"<string>\",\n  \"duration\": \"<number>\",\n  \"description\": \"<string>\",\n  \"position\": 0,\n  \"programId\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/media",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"media"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"description\": \"<string>\",\n  \"duration\": \"<number>\",\n  \"file\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"position\": 0,\n  \"programId\": \"<integer>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create a program",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Program created successfully\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.collectionVariables.set(\"programId\", jsonData.id);\r",
+									"    pm.expect(jsonData.name).to.eq(\"Podcasts\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Podcasts\",\n  \"cover\": \"https://image.com/cover/1358190.jpg\",\n  \"description\": \"All podcasts related medias\",\n  \"medias\": []\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/program",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"program"
+							]
+						},
+						"description": "Create a program"
+					},
+					"response": [
+						{
+							"name": "Default Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"<string>\",\n  \"cover\": \"<string>\",\n  \"description\": \"<string>\",\n  \"medias\": [\n    {\n      \"description\": \"<string>\",\n      \"duration\": \"<number>\",\n      \"file\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"position\": 0,\n      \"programId\": \"<integer>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"duration\": \"<number>\",\n      \"file\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"position\": 0,\n      \"programId\": \"<integer>\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/program",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"program"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"cover\": \"<string>\",\n  \"description\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"medias\": [\n    {\n      \"description\": \"<string>\",\n      \"duration\": \"<number>\",\n      \"file\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"position\": 0,\n      \"programId\": \"<integer>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"duration\": \"<number>\",\n      \"file\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"position\": 0,\n      \"programId\": \"<integer>\"\n    }\n  ],\n  \"name\": \"<string>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Edit a media",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Media was updated successfully\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.programId).to.eq(pm.collectionVariables.get(\"programId\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"programId\": \"{{programId}}\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/media/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"media",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{mediaId}}"
+								}
+							]
+						},
+						"description": "Edit a media"
+					},
+					"response": [
+						{
+							"name": "Default Response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"<string>\",\n  \"file\": \"<string>\",\n  \"duration\": \"<number>\",\n  \"description\": \"<string>\",\n  \"position\": 0,\n  \"programId\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/media/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"media",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"description\": \"<string>\",\n  \"duration\": \"<number>\",\n  \"file\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"position\": 0,\n  \"programId\": \"<integer>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get a media",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Media retrieved successfully\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eq(pm.collectionVariables.get(\"mediaId\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/media/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"media",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{mediaId}}"
+								}
+							]
+						},
+						"description": "Get a media"
+					},
+					"response": [
+						{
+							"name": "Default Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/media/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"media",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"description\": \"<string>\",\n  \"duration\": \"<number>\",\n  \"file\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"position\": 0,\n  \"programId\": \"<integer>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "See all the medias on a page (with pagination)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Medias are listed\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.cursor).to.be.gte(1);\r",
+									"    pm.expect(jsonData.length).to.be.gte(1);\r",
+									"    pm.expect(jsonData.items.length).to.be.gte(1)\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/media?cursor=1&offset=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"media"
+							],
+							"query": [
+								{
+									"key": "cursor",
+									"value": "1",
+									"description": "(Required) Page number"
+								},
+								{
+									"key": "offset",
+									"value": "20",
+									"description": "(Required) Number of items by page"
+								}
+							]
+						},
+						"description": "See all the medias on a page (with pagination)"
+					},
+					"response": [
+						{
+							"name": "Default Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/media?cursor=0&offset=20",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"media"
+									],
+									"query": [
+										{
+											"key": "cursor",
+											"value": "0",
+											"description": "(Required) Page number"
+										},
+										{
+											"key": "offset",
+											"value": "20",
+											"description": "(Required) Number of items by page"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"cursor\": \"<integer>\",\n  \"length\": \"<integer>\",\n  \"items\": [\n    {\n      \"description\": \"<string>\",\n      \"duration\": \"<number>\",\n      \"file\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"position\": 0,\n      \"programId\": \"<integer>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"duration\": \"<number>\",\n      \"file\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"position\": 0,\n      \"programId\": \"<integer>\"\n    }\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get a program",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Program retrieved successfully\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.id).to.eq(pm.collectionVariables.get(\"programId\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Program's medias are included\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.medias.length).to.be.gte(1);\r",
+									"\r",
+									"    const mediaId = pm.collectionVariables.get(\"mediaId\");\r",
+									"    const media = jsonData.medias.find(media => media.id === mediaId);\r",
+									"    pm.expect(media).to.have.property(\"name\", \"Podcast #1\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/program/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"program",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{programId}}"
+								}
+							]
+						},
+						"description": "Edit a program"
+					},
+					"response": [
+						{
+							"name": "Default Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/program/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"program",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"cover\": \"<string>\",\n  \"description\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"medias\": [\n    {\n      \"description\": \"<string>\",\n      \"duration\": \"<number>\",\n      \"file\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"position\": 0,\n      \"programId\": \"<integer>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"duration\": \"<number>\",\n      \"file\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"position\": 0,\n      \"programId\": \"<integer>\"\n    }\n  ],\n  \"name\": \"<string>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "See all the programs on a page (with pagination)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Programs are listed successfully\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.cursor).to.be.gte(1);\r",
+									"    pm.expect(jsonData.length).to.be.gte(1);\r",
+									"    pm.expect(jsonData.items.length).to.be.gte(1)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Medias are included\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    const programId = pm.collectionVariables.get(\"programId\");\r",
+									"    const target = jsonData.items.find(item => item.id === programId);\r",
+									"    pm.expect(target.medias.length).to.be.gte(1);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/program?cursor=1&offset=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"program"
+							],
+							"query": [
+								{
+									"key": "cursor",
+									"value": "1",
+									"description": "(Required) Page number"
+								},
+								{
+									"key": "offset",
+									"value": "20",
+									"description": "(Required) Number of items by page"
+								}
+							]
+						},
+						"description": "See all the programs on a page (with pagination)"
+					},
+					"response": [
+						{
+							"name": "Default Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/program?cursor=0&offset=20",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"program"
+									],
+									"query": [
+										{
+											"key": "cursor",
+											"value": "0",
+											"description": "(Required) Page number"
+										},
+										{
+											"key": "offset",
+											"value": "20",
+											"description": "(Required) Number of items by page"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"cursor\": \"<integer>\",\n  \"length\": \"<integer>\",\n  \"items\": [\n    {\n      \"cover\": \"<string>\",\n      \"description\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"medias\": [\n        {\n          \"description\": \"<string>\",\n          \"duration\": \"<number>\",\n          \"file\": \"<string>\",\n          \"id\": \"<integer>\",\n          \"name\": \"<string>\",\n          \"position\": 0,\n          \"programId\": \"<integer>\"\n        },\n        {\n          \"description\": \"<string>\",\n          \"duration\": \"<number>\",\n          \"file\": \"<string>\",\n          \"id\": \"<integer>\",\n          \"name\": \"<string>\",\n          \"position\": 0,\n          \"programId\": \"<integer>\"\n        }\n      ],\n      \"name\": \"<string>\"\n    },\n    {\n      \"cover\": \"<string>\",\n      \"description\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"medias\": [\n        {\n          \"description\": \"<string>\",\n          \"duration\": \"<number>\",\n          \"file\": \"<string>\",\n          \"id\": \"<integer>\",\n          \"name\": \"<string>\",\n          \"position\": 0,\n          \"programId\": \"<integer>\"\n        },\n        {\n          \"description\": \"<string>\",\n          \"duration\": \"<number>\",\n          \"file\": \"<string>\",\n          \"id\": \"<integer>\",\n          \"name\": \"<string>\",\n          \"position\": 0,\n          \"programId\": \"<integer>\"\n        }\n      ],\n      \"name\": \"<string>\"\n    }\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete a media",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/media/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"media",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{mediaId}}"
+								}
+							]
+						},
+						"description": "Delete a media"
+					},
+					"response": [
+						{
+							"name": "Successfully deleted media",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/media/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"media",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Edit a program",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Program updated successfully\", function () {\r",
+									"    const jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eq(\"Favorites\");\r",
+									"    pm.expect(jsonData.description).to.eq(\"All my favorite medias\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Favorites\",\n  \"description\": \"All my favorite medias\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/program/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"program",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{programId}}"
+								}
+							]
+						},
+						"description": "Edit a program"
+					},
+					"response": [
+						{
+							"name": "Default Response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"<string>\",\n  \"cover\": \"<string>\",\n  \"description\": \"<string>\",\n  \"medias\": [\n    {\n      \"description\": \"<string>\",\n      \"duration\": \"<number>\",\n      \"file\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"position\": 0,\n      \"programId\": \"<integer>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"duration\": \"<number>\",\n      \"file\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"position\": 0,\n      \"programId\": \"<integer>\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/program/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"program",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"cover\": \"<string>\",\n  \"description\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"medias\": [\n    {\n      \"description\": \"<string>\",\n      \"duration\": \"<number>\",\n      \"file\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"position\": 0,\n      \"programId\": \"<integer>\"\n    },\n    {\n      \"description\": \"<string>\",\n      \"duration\": \"<number>\",\n      \"file\": \"<string>\",\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"position\": 0,\n      \"programId\": \"<integer>\"\n    }\n  ],\n  \"name\": \"<string>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete a program",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/program/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"program",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{programId}}"
+								}
+							]
+						},
+						"description": "Delete a program"
+					},
+					"response": [
+						{
+							"name": "Successfully deleted program",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/program/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"program",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			],
+			"description": "A basic test suite validating all API endpoints with dummy values."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "mediaId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "programId",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
