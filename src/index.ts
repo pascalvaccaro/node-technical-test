@@ -1,3 +1,4 @@
+import "dotenv/config";
 import Fastify from "fastify";
 import { fastifySwagger } from "@fastify/swagger";
 import { fastifySwaggerUi } from "@fastify/swagger-ui";
@@ -13,7 +14,7 @@ const start = async () => {
   try {
     fastify.register(fastifyMysql, {
       promise: true,
-      connectionString: "mysql://server:staging@localhost/app",
+      connectionString: `mysql://${process.env.MYSQL_USER}:${process.env.MYSQL_PASSWORD}@localhost/${process.env.MYSQL_DATABASE}`,
     });
     await fastify.register(fastifySwagger, {
       swagger: {
