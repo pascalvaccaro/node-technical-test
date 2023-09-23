@@ -10,6 +10,136 @@
 			"name": "Basic Test Suite",
 			"item": [
 				{
+					"name": "Upload a media",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Media created correctly\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.name).to.eq(\"Upload\");\r",
+									"    pm.expect(jsonData.file).to.contains(\"BE_Chakra_Clap1.wav\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Upload",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "A first upload",
+									"type": "text"
+								},
+								{
+									"key": "duration",
+									"value": "1005759",
+									"type": "text"
+								},
+								{
+									"key": "position",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "BE_Chakra_Clap1.wav"
+								},
+								{
+									"key": "programId",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/media",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"media"
+							]
+						},
+						"description": "Create a media"
+					},
+					"response": [
+						{
+							"name": "Default Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"<string>\",\n  \"file\": \"<string>\",\n  \"duration\": \"<number>\",\n  \"description\": \"<string>\",\n  \"position\": 0,\n  \"programId\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/media",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"media"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"description\": \"<string>\",\n  \"duration\": \"<number>\",\n  \"file\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"position\": 0,\n  \"programId\": \"<integer>\"\n}"
+						}
+					]
+				},
+				{
 					"name": "Create a media",
 					"event": [
 						{

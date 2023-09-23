@@ -32,8 +32,9 @@ export default (fastify: FastifyInstance) => {
     "/api/media",
     {
       schema: {
+        consumes: ['application/json', 'multipart/form-data'],
         description: "Create a media",
-        body: Media,
+        body: Type.Union([Media, Type.String()]),
         response: {
           201: MediaId,
         },

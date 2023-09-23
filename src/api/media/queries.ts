@@ -19,7 +19,7 @@ export default (fastify: FastifyInstance) => {
       } = payload;
       const [result] = await connection.query<ResultSetHeader>(
         "INSERT INTO medias (name, file, description, duration, position, programId) VALUES (?, ?, ?, ?, ?, ?)",
-        [name, file, description, duration, position, programId]
+        [name, file, description, duration, position, programId || null]
       );
       return getMediaById(result.insertId);
     } catch (err) {
