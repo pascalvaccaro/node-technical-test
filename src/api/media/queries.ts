@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { RowDataPacket, ResultSetHeader } from "mysql2/promise";
 import { MediaIdType, MediaType } from "./schema";
 import { PaginationQuerystringType } from "../pagination/schema";
+import { NoProgramError } from "../../utils/error";
 
 type MediaRow = MediaIdType & RowDataPacket;
 
@@ -17,6 +18,15 @@ export default (fastify: FastifyInstance) => {
         position = 0,
         programId,
       } = payload;
+
+      if (programId) {
+        const [program] = await connection.query<RowDataPacket[]>(
+          "SELECT id FROM programs WHERE id = ?",
+          [programId]
+        );
+        if (!program.length)
+          throw new NoProgramError("no program found with id " + programId);
+      }
       const [result] = await connection.query<ResultSetHeader>(
         "INSERT INTO medias (name, file, description, duration, position, programId) VALUES (?, ?, ?, ?, ?, ?)",
         [name, file, description, duration, position, programId || null]
